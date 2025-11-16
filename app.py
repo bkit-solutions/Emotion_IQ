@@ -14,10 +14,11 @@ app.secret_key = 'your_secret_key'  # Required for session handling
 # MongoDB Configuration (UPDATED TO emotdb)
 # ================================
 app.config['MONGO_URI'] = (
-    "mongodb+srv://dharmarajucaleb4_db_user:8EwSyeRs3vApljGg"
-    "@cluster0.oqnc6uj.mongodb.net/emotdb?"
-    "retryWrites=true&w=majority&appName=Cluster0"
+    "mongodb+srv://<DB_USER>:<DB_PASSWORD>"
+    "@<CLUSTER_URL>/<DB_NAME>?"
+    "retryWrites=true&w=majority&appName=<APP_NAME>"
 )
+
 mongo = PyMongo(app)
 
 # Authentication collection
