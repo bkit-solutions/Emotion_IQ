@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Detection App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-gray-900 text-gray-200">
+    <!-- HEADER / NAVBAR -->
+<header class="fixed w-full top-0 left-0 z-50 bg-gray-900 bg-opacity-80 backdrop-blur-xl border-b border-gray-700">
+    <nav class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+
+        <!-- Brand -->
+        <a href="#home" class="text-2xl font-extrabold tracking-wide text-teal-400">
+            Emotion<span class="text-white">IQ</span>
+        </a>
+
+        <!-- Mobile Menu Button -->
+        <button id="menu-btn" class="md:hidden text-teal-400 text-3xl focus:outline-none">
+            ☰
+        </button>
+
+        <!-- Menu Items -->
+        <ul id="menu"
+            class="hidden md:flex items-center space-x-6 text-gray-300 font-medium">
+
+            <li><a href="#home" class="nav-link">Home</a></li>
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li><a href="#how-to-use" class="nav-link">How It Works</a></li>
+            <li><a href="#team" class="nav-link">Team</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+
+        </ul>
+    </nav>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobile-menu"
+        class="hidden md:hidden bg-gray-900 bg-opacity-95 px-6 py-4 border-t border-gray-700">
+        <ul class="flex flex-col space-y-4 text-gray-200">
+            <li><a href="#home" class="mobile-link">Home</a></li>
+            <li><a href="#about" class="mobile-link">About</a></li>
+            <li><a href="#how-to-use" class="mobile-link">How It Works</a></li>
+            <li><a href="#team" class="mobile-link">Team</a></li>
+            <li><a href="#contact" class="mobile-link">Contact</a></li>
+        </ul>
+    </div>
+</header>
+
+<!-- Navbar Hover + Mobile Logic -->
+<style>
+    .nav-link {
+        position: relative;
+        padding-bottom: 4px;
+        transition: color 0.2s ease;
+    }
+    .nav-link:hover {
+        color: #2dd4bf;
+    }
+    .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0%;
+        height: 2px;
+        background-color: #2dd4bf;
+        transition: width 0.25s ease;
+    }
+    .nav-link:hover::after {
+        width: 100%;
+    }
+
+    .mobile-link {
+        padding: 8px 0;
+        display: block;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+</style>
+
+<script>
+    const menuBtn = document.getElementById("menu-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    menuBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+        menuBtn.textContent = mobileMenu.classList.contains("hidden") ? "☰" : "✕";
+    });
+</script>
+
+
+    <!-- HERO SECTION -->
+<section id="home"
+    class="min-h-screen flex flex-col md:flex-row items-center justify-center px-6 pt-40 pb-10
+           bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden">
+
+
+    <!-- Soft Glow Background Shapes -->
+    <div class="absolute top-0 left-1/3 w-72 h-72 bg-teal-500 opacity-20 blur-3xl rounded-full"></div>
+    <div class="absolute bottom-0 right-1/3 w-72 h-72 bg-blue-600 opacity-10 blur-3xl rounded-full"></div>
+
+    <!-- LEFT CONTENT -->
+    <div class="relative z-10 md:w-1/2 max-w-xl space-y-4 text-white">
+
+        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
+            Transforming Emotions with  
+            <span class="text-teal-400">AI Intelligence</span>
+        </h1>
+
+        <p class="text-gray-300 text-base md:text-lg leading-relaxed mt-3">
+            EmotionIQ analyzes human emotions using advanced neural networks and delivers real-time,
+            personalized insights designed to improve mood, focus, performance, and well-being.
+        </p>
+
+        <p class="text-gray-400 text-sm md:text-base">
+            Trusted by professionals, teams, and researchers worldwide.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="mt-6 flex flex-col sm:flex-row gap-4">
+            <a href="{{ url_for('index') }}"
+               class="px-8 py-3 bg-teal-500 text-gray-900 font-semibold rounded-lg shadow-lg
+                      hover:bg-teal-600 transition text-center">
+                Get Started
+            </a>
+
+            <a href="#about"
+               class="px-8 py-3 bg-gray-800 border border-gray-600 text-white font-semibold rounded-lg
+                      hover:bg-gray-700 transition text-center">
+                Learn More
+            </a>
+        </div>
+
+        <!-- STATS -->
+        <div class="mt-10 grid grid-cols-3 gap-4">
+
+            <!-- Stat Card -->
+            <div class="p-4 bg-gray-800 bg-opacity-60 rounded-xl border border-gray-700 text-center">
+                <h3 class="text-3xl font-bold text-teal-400">
+                    <span id="emotion-accuracy">1</span>%
+                </h3>
+                <p class="text-xs text-gray-400 mt-1">Emotion Accuracy</p>
+            </div>
+
+            <div class="p-4 bg-gray-800 bg-opacity-60 rounded-xl border border-gray-700 text-center">
+                <h3 class="text-3xl font-bold text-teal-400">
+                    <span id="recommendation-accuracy">1</span>%
+                </h3>
+                <p class="text-xs text-gray-400 mt-1">AI Recommendation Accuracy</p>
+            </div>
+
+            <div class="p-4 bg-gray-800 bg-opacity-60 rounded-xl border border-gray-700 text-center">
+                <h3 class="text-3xl font-bold text-teal-400">
+                    <span id="medical-approval">1</span>+
+                </h3>
+                <p class="text-xs text-gray-400 mt-1">Industry Endorsements</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- RIGHT SIDE ILLUSTRATION -->
+    <div class="relative z-10 md:w-1/2 flex justify-center mt-10 md:mt-0">
+        <img src="{{ url_for('static', filename='emotion.jpg') }}"
+             class="w-60 sm:w-72 md:w-96 rounded-xl shadow-2xl border border-gray-700 opacity-95 hover:opacity-100 transition"
+             alt="AI Emotion Detection">
+    </div>
+
+</section>
+
+<!-- NUMBER ANIMATION SCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    function animateNumber(id, start, end, duration) {
+        let element = document.getElementById(id);
+        let range = end - start;
+        let startTime = performance.now();
+
+        function update() {
+            let now = performance.now();
+            let progress = Math.min((now - startTime) / duration, 1);
+            element.textContent = Math.floor(start + range * progress);
+
+            if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+    }
+
+    animateNumber("emotion-accuracy", 1, 98, 1800);
+    animateNumber("recommendation-accuracy", 1, 90, 1800);
+    animateNumber("medical-approval", 1, 150, 1800);
+});
+</script>
+
+
+    <!-- ABOUT SECTION (Modern Scientific UI) -->
+<section id="about" class="py-20 bg-gray-900 text-gray-300">
+    <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+        <!-- Image -->
+        <div class="w-full">
+            <img src="{{ url_for('static', filename='about.png') }}"
+                 alt="EmotionIQ AI System"
+                 class="rounded-2xl shadow-xl border border-gray-700 w-full opacity-95 hover:opacity-100 transition">
+        </div>
+
+        <!-- Text Content -->
+        <div>
+            <h2 class="text-4xl font-bold text-teal-400 mb-4">Our Mission</h2>
+
+            <p class="text-base leading-relaxed mb-4">
+                At <span class="text-teal-400 font-semibold">EmotionIQ</span>, our mission is to help people
+                understand emotions more scientifically. Using advanced deep learning and affective computing,
+                we deliver real-time emotional insights that support mental wellness, productivity,
+                and smarter human–AI interaction.
+            </p>
+
+            <p class="text-base leading-relaxed mb-6">
+                Our system analyzes micro-expressions, facial signals, and behavioral cues to provide
+                accurate emotional predictions and personalized recommendations — empowering users to
+                manage stress, improve focus, and enhance everyday decision-making.
+            </p>
+
+            <!-- Feature Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-4">
+
+                <div class="flex gap-3 items-start bg-gray-800 bg-opacity-50 p-4 rounded-xl border border-gray-700">
+                    <span class="text-teal-400 text-2xl">🔬</span>
+                    <div>
+                        <h4 class="font-semibold text-white">Deep Emotion Analysis</h4>
+                        <p class="text-sm text-gray-400">High-precision predictions using neural networks.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-3 items-start bg-gray-800 bg-opacity-50 p-4 rounded-xl border border-gray-700">
+                    <span class="text-teal-400 text-2xl">⚡</span>
+                    <div>
+                        <h4 class="font-semibold text-white">Instant AI Insights</h4>
+                        <p class="text-sm text-gray-400">Personalized suggestions tailored to your mood.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-3 items-start bg-gray-800 bg-opacity-50 p-4 rounded-xl border border-gray-700">
+                    <span class="text-teal-400 text-2xl">🧠</span>
+                    <div>
+                        <h4 class="font-semibold text-white">Well-Being Focused</h4>
+                        <p class="text-sm text-gray-400">Tools to reduce stress and maintain balance.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-3 items-start bg-gray-800 bg-opacity-50 p-4 rounded-xl border border-gray-700">
+                    <span class="text-teal-400 text-2xl">🔒</span>
+                    <div>
+                        <h4 class="font-semibold text-white">Trusted & Secure</h4>
+                        <p class="text-sm text-gray-400">Designed with privacy and accuracy in mind.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+    <!-- HOW IT WORKS (Minimal Modern Design) -->
+<section id="how-to-use" class="py-16 bg-gray-900 text-center">
+    
+    <h2 class="text-3xl font-bold text-teal-400 mb-2">How It Works</h2>
+    <p class="text-gray-400 max-w-xl mx-auto text-sm md:text-base">
+        Get started in three simple steps using our AI-powered emotion recognition system.
+    </p>
+
+    <!-- Steps Container -->
+    <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto px-6">
+
+        <!-- Step 1 -->
+        <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700 hover:border-teal-400 transition-all">
+            <div class="text-teal-400 text-3xl mb-2 font-bold">1</div>
+            <h3 class="text-lg font-semibold text-white">Register / Login</h3>
+            <p class="text-gray-400 text-sm mt-2">
+                Create an account or log in to access features.
+            </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700 hover:border-teal-400 transition-all">
+            <div class="text-teal-400 text-3xl mb-2 font-bold">2</div>
+            <h3 class="text-lg font-semibold text-white">Capture Image</h3>
+            <p class="text-gray-400 text-sm mt-2">
+                Use your webcam or upload an image for analysis.
+            </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700 hover:border-teal-400 transition-all">
+            <div class="text-teal-400 text-3xl mb-2 font-bold">3</div>
+            <h3 class="text-lg font-semibold text-white">Get Predictions</h3>
+            <p class="text-gray-400 text-sm mt-2">
+                Our AI detects emotions & generates insights instantly.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+    <style>
+        /* Smooth transition effect */
+        .fade {
+            transition: opacity 1s ease-in-out;
+        }
+    </style>
+
+    <script>
+        const images = [
+            "{{ url_for('static', filename='s1.png') }}",
+            "{{ url_for('static', filename='s2.png') }}",
+            "{{ url_for('static', filename='s3.png') }}",
+            "{{ url_for('static', filename='s4.png') }}"
+        ];
+        let currentImageIndex = 0;
+        const slideshowElement = document.getElementById("slideshow");
+
+        function changeImage() {
+            slideshowElement.style.opacity = 0;  // Fade out
+            setTimeout(() => {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                slideshowElement.src = images[currentImageIndex];
+                slideshowElement.style.opacity = 1;  // Fade in
+            }, 1000); // Wait for fade out before changing image
+        }
+
+        setInterval(changeImage, 4000); // Change image every 4 seconds
+    </script>
+
+    <!-- Team Section -->
+    <section id="team" class="py-16 md:py-20 text-center bg-gray-800">
+        <h2 class="text-3xl md:text-4xl font-bold text-teal-400">Meet the Team</h2>
+        <p class="mt-4 text-base md:text-lg text-gray-300">
+            Our dedicated team of AI experts, designers, and developers work together to bring this innovative project to life.
+        </p>
+        
+        <div class="mt-8 flex flex-wrap justify-center gap-4 md:gap-8">
+           {% for member in [
+    {'name': 'Alex Johnson', 'role': 'Project Manager', 'linkedin': '#', 'github': '#', 'image': 'team.jpg'},
+    {'name': 'Jordan Smith', 'role': 'Backend Developer', 'linkedin': '#', 'github': '#', 'image': 'team.jpg'},
+    {'name': 'Taylor Brown', 'role': 'ML Engineer', 'linkedin': '#', 'github': '#', 'image': 'team.jpg'},
+    {'name': 'Riley Davis', 'role': 'Frontend Developer', 'linkedin': '#', 'github': '#', 'image': 'team.jpg'},
+    {'name': 'Casey Lee', 'role': 'Data Analyst', 'linkedin': '#', 'github': '#', 'image': 'team.jpg'}
+] %}
+
+            <div class="w-full sm:w-64 p-4 md:p-6 bg-gray-700 rounded-lg hover:scale-105 transition shadow-lg">
+                <!-- Profile Image -->
+                <img src="{{ url_for('static', filename=member.image) }}" 
+                     alt="{{ member.name }}" 
+                     class="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full border-4 border-teal-400 shadow-lg object-cover">
+                
+                <!-- Name & Role -->
+                <h3 class="text-lg md:text-xl font-bold text-teal-400 mt-4">{{ member.name }}</h3>
+                <p class="mt-2 text-sm md:text-base text-gray-300">{{ member.role }}</p>
+                
+                <!-- Social Media Icons -->
+                <div class="flex justify-center gap-4 mt-4 text-teal-300">
+                    <a href="{{ member.linkedin }}" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-linkedin text-xl md:text-2xl hover:text-gray-200"></i>
+                    </a>
+                    <a href="{{ member.github }}" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-github text-xl md:text-2xl hover:text-gray-200"></i>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+<section id="contact" class="bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 py-20 px-6 text-white">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+        <!-- Contact Form -->
+        <div class="bg-gray-900 bg-opacity-60 backdrop-blur-lg border border-gray-700 rounded-2xl p-8 shadow-xl">
+            <h2 class="text-4xl font-bold text-teal-400 mb-4">Get in Touch</h2>
+            <p class="text-gray-300 mb-6">Have a question or want to collaborate? Fill out the form and we’ll respond soon.</p>
+
+            <form action="mailto:youremail@example.com" method="post" class="space-y-4">
+                <input type="text" name="name" placeholder="Your Name"
+                    class="w-full p-3 bg-gray-800 rounded-lg border border-gray-700 focus:border-teal-400 outline-none transition">
+
+                <input type="email" name="email" placeholder="Your Email"
+                    class="w-full p-3 bg-gray-800 rounded-lg border border-gray-700 focus:border-teal-400 outline-none transition">
+
+                <textarea name="message" placeholder="Your Message" rows="5"
+                    class="w-full p-3 bg-gray-800 rounded-lg border border-gray-700 focus:border-teal-400 outline-none transition"></textarea>
+
+                <button type="submit"
+                    class="w-full py-3 bg-teal-500 hover:bg-teal-600 text-gray-900 font-semibold rounded-lg shadow-lg transition">
+                    Send Message
+                </button>
+            </form>
+        </div>
+
+        <!-- INFO PANEL -->
+        <div class="bg-gray-900 bg-opacity-60 backdrop-blur-lg border border-gray-700 rounded-2xl p-8 shadow-xl">
+            <h3 class="text-3xl font-bold text-teal-400 mb-6">Contact Information</h3>
+
+            <div class="space-y-5 text-gray-300">
+
+                <p class="flex items-start gap-3">
+                    <span class="text-teal-400 text-xl">📍</span>
+                    <span>
+                        <strong class="text-white">Address</strong> <br>
+                        123 Main Street, City, Country
+                    </span>
+                </p>
+
+                <p class="flex items-start gap-3">
+                    <span class="text-teal-400 text-xl">📞</span>
+                    <span>
+                        <strong class="text-white">Phone</strong> <br>
+                        +123 456 7890
+                    </span>
+                </p>
+
+                <p class="flex items-start gap-3">
+                    <span class="text-teal-400 text-xl">📧</span>
+                    <span>
+                        <strong class="text-white">Email</strong> <br>
+                        youremail@example.com
+                    </span>
+                </p>
+
+                <p class="flex items-start gap-3">
+                    <span class="text-teal-400 text-xl">🌐</span>
+                    <span>
+                        <strong class="text-white">Social</strong> <br>
+                        Follow us for updates & announcements
+                    </span>
+                </p>
+
+                <div class="flex gap-4 mt-4">
+                    <a href="#" class="text-gray-300 hover:text-teal-400 text-xl">🐦</a>
+                    <a href="#" class="text-gray-300 hover:text-teal-400 text-xl">📘</a>
+                    <a href="#" class="text-gray-300 hover:text-teal-400 text-xl">📸</a>
+                    <a href="#" class="text-gray-300 hover:text-teal-400 text-xl">💼</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-950 text-gray-400 py-14 px-6">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
+
+        <!-- BRAND -->
+        <div>
+            <h3 class="text-2xl font-bold text-white mb-3">EmotionIQ</h3>
+            <p class="text-gray-400 leading-relaxed">
+                A smart AI-powered system that detects emotions and provides personalized recommendations. Designed for a better digital experience.
+            </p>
+        </div>
+
+        <!-- QUICK LINKS -->
+        <div>
+            <h4 class="text-lg font-semibold text-white mb-3">Quick Links</h4>
+            <ul class="space-y-2">
+                <li><a href="#home" class="hover:text-teal-400">Home</a></li>
+                <li><a href="#about" class="hover:text-teal-400">About</a></li>
+                <li><a href="#how-to-use" class="hover:text-teal-400">How to Use</a></li>
+                <li><a href="#team" class="hover:text-teal-400">Team</a></li>
+                <li><a href="#contact" class="hover:text-teal-400">Contact</a></li>
+            </ul>
+        </div>
+
+        <!-- CONTACT -->
+        <div>
+            <h4 class="text-lg font-semibold text-white mb-3">Reach Us</h4>
+            <p class="mb-2">📧 youremail@example.com</p>
+            <p class="mb-2">📞 +123 456 7890</p>
+            <p class="mb-4">📍 123 Main Street, City</p>
+
+            <div class="flex gap-5">
+                <a href="#" class="hover:text-teal-400 text-xl">🐦</a>
+                <a href="#" class="hover:text-teal-400 text-xl">📘</a>
+                <a href="#" class="hover:text-teal-400 text-xl">📸</a>
+                <a href="#" class="hover:text-teal-400 text-xl">💼</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center text-gray-600 mt-10 border-t border-gray-800 pt-6">
+        © 2025 EmotionIQ — All Rights Reserved.
+    </div>
+</footer>
+
+
+    <script>
+        document.getElementById("menu-btn").addEventListener("click", function() {
+            document.getElementById("menu").classList.toggle("hidden");
+        });
+    </script>
+</body>
+</html>
