@@ -92,9 +92,7 @@ app.config['MONGO_URI'] = "your-mongodb-url"
 pip install fer==22.4.0
 ```
 
-## ✔ Environment Variables
-(Optional `.env`)
-```
+
 MONGO_URI="your_mongodb_url"
 SECRET_KEY="your_secret_key"
 PORT=8080
